@@ -3,6 +3,6 @@
 
 同时，它也是一个很好的学习项目，包含了一些常见问题的解决方案。
 
-
+数据库文件是dormDB的ldf和mdf文件
 
 Copyright (c) 2019-Du Bowen
