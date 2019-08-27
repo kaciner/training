@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="training.dao.UserDao">
+<select id="findUser" parameterType="String" resultType="user">
+ select * from users where name = #{name} and password = #{password}
+</select>
+	
+	<select id="selectUserList"  parameterType="user" resultType="user">
+		select name,password from users 
+		<where>
+		<if test="name != null and name !='' ">
+			name = #{name}
+		</if>
+		</where>
+	</select>
+
+	<select id="selectUserListCount" parameterType="user" resultType="Integer">
+		select count(*) from users
+	</select>
+	
+<insert id="addUser" parameterType="training.po.User">
+		insert into users (name,password) values(#{name},#{password})
+</insert>
+
+<select id="findUserByName" parameterType="String" resultType="training.po.User">
+		select name, password from users where name = #{name}
+</select>
+
+
+<update id="updateUser" parameterType="training.po.User">
+		update users set password = #{password} where name = #{name}
+</update>
+	
+<delete id="deleteUser" parameterType="String">
+		delete from users where name = #{name}
+</delete>
+</mapper>

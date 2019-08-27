@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="training.dao.RoomDao">
+
+	<!--  <resultMap id="roomMap" type="training.po.Room">
+		<id column="id" property="id"/>
+		<result column="build" property="build"/>
+		<result column="number" property="number"/>
+		<result column="sex" property="sex"/>
+		<result column="status" property="status"/>
+		<collection property="students" ofType="training.po.Student" select="findStudent" column="name"/>
+	</resultMap> 	 -->
+	<select id="selectRoomList"  parameterType="room" resultType="room">
+		select id, build, number, sex, status from room 
+		<where>
+		<if test="build != null and build !='' ">
+			build like '%'+#{build}+'%' 
+		</if>
+		<if test="number != null and number !='' ">
+			and number = #{number}
+		</if>
+		</where>
+	</select>
+
+	<select id="selectRoomListCount" parameterType="room" resultType="Integer">
+		select count(*) from room
+	</select>
+
+	<select id="findRoomById" parameterType="int" resultType="training.po.Room">
+		select id, build, number, sex, status from room where id = #{id}
+	</select>
+
+	<insert id="addRoom" parameterType="training.po.Room" useGeneratedKeys="true" keyProperty="id">
+		insert into room (build,number,sex,status) values(#{build},#{number},#{sex},#{status})
+	</insert>
+
+	<update id="updateRoom" parameterType="training.po.Room">
+		update room set build=#{build}, number=#{number}, sex=#{sex}, status=#{status} where id=#{id}
+	</update>
+	
+	<delete id="deleteRoom" parameterType="Integer">
+		delete from room where id = #{id}
+	</delete>
+
+	<select id="selectStudent" parameterType="int" resultType="training.po.Student">
+		select id, name, grade, major from student where roomid = #{id}
+	</select>
+	
+	<select id="selectRepair" parameterType="int" resultType="training.po.Repair">
+		select description, date from repair where roomid = #{id}
+	</select>
+</mapper>

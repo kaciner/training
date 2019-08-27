@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="training.dao.RepairDao">
+
+	<select id="selectRepairList"  parameterType="repair" resultType="repair">
+		select roomid,description,date from repair 
+		<where>
+		<if test="roomid != null and roomid !='' ">
+			roomid = #{roomid} 
+		</if>
+		</where>
+	</select>
+
+	<select id="findRepairByRoomid" parameterType="int" resultType="training.po.Repair">
+		select roomid,description,date from repair where roomid = #{roomid}
+	</select>
+	
+	<select id="selectRepairListCount" parameterType="repair" resultType="Integer">
+		select count(*) from repair
+	</select>
+	
+	<insert id="addRepair" parameterType="training.po.Repair">
+		insert into repair (description,date,roomid) values(#{description},#{date},#{roomid})
+	</insert>
+
+	<update id="updateRepair" parameterType="training.po.Repair">
+		update repair set description=#{description}, date=#{date},roomid=#{roomid} where roomid=#{roomid}
+	</update>
+	
+	<delete id="deleteRepair" parameterType="int">
+		delete from repair where roomid = #{roomid}
+	</delete>
+</mapper>
+	

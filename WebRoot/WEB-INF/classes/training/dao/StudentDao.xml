@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="training.dao.StudentDao">
+
+	<select id="selectStudentList" parameterType="student" resultType="student">
+		select id, name, major, grade ,roomid from student
+		<where>
+		<if test="id != null and id !='' ">
+			id = #{id}
+		</if>
+		<if test="name != null and name !='' ">
+			and name like '%'+#{name}+'%' 
+		</if>
+		</where>
+	</select>
+	
+	<select id="selectStudentListCount" parameterType="student" resultType="Integer">
+		select count(*) from student
+	</select>
+
+	<select id="selectStudentById" parameterType="String" resultType="training.po.Student">
+		select id, name, major, grade ,roomid from student where id=#{id}
+	</select>
+
+	<insert id="addStudent" parameterType="training.po.Student">
+		insert into student (id, name, major, grade ,roomid) values(#{id},#{name},#{major},#{grade},#{roomid})
+	</insert>
+
+	<update id="updateStudent" parameterType="training.po.Student">
+		update student set name=#{name}, major=#{major}, grade=#{grade},roomid=#{roomid} where id=#{id}
+	</update>
+	
+	<delete id="deleteStudent" parameterType="String">
+		delete from student where id = #{id}
+	</delete>
+	
+</mapper>
